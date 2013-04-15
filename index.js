@@ -54,7 +54,7 @@ function lift2(f, a, b) {
 exports.lift2 = lift2;
 
 function lift3(f, a, b, c) {
-    return ap(b, ap(b, map(a, function(a) {
+    return ap(c, ap(b, map(a, function(a) {
         return function(b) {
             return function(c) {
                 return f(a, b, c);
