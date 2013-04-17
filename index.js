@@ -76,3 +76,36 @@ function lift4(f, a, b, c, d) {
     }))));
 }
 exports.lift4 = lift4;
+
+/**
+ * 
+ * takes a node style API and transforms it into a Fantasy-land Promise
+ * @example:
+ * var fs = require("fs");
+ * var p = node.call(fs.readFile,'./myfile.js', 'UTF-8');
+ * p.fork(
+ *        function(d) {console.log(d)},
+ *        function(err) {console.log(err)},
+ * );
+ */
+var node = (function(){
+  var slice = [].slice;  
+  function apply(func, args) {
+      return new Promise(function(resolve, reject) {
+         var callback =  function(err,data) {
+              if(err) return reject(error);
+              resolve(data);
+         }  
+        func.apply(null, args.concat(callback));
+      });
+  }
+  
+  function call(func) {
+    return apply(func, slice.call(arguments, 1));
+  }
+
+  return {call: call, apply: apply};
+})();
+
+exports.node = node;
+
