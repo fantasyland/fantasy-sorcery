@@ -15,7 +15,6 @@ exports.zero = zero;
 
 function map(m, f) {
     if(m.map) return m.map(f);
-    if(m.constructor.map) return m.constructor.map(f);
     return flatMap(m, function(a) {
         return point(m, f(a));
     });
