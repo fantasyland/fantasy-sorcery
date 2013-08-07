@@ -76,3 +76,16 @@ function lift4(f, a, b, c, d) {
     }))));
 }
 exports.lift4 = lift4;
+
+function sequence(ms, ofObject) {
+    if (arguments.length < 2) ofObject = ms[0]
+    return ms.reduceRight(function (m_, m) {
+        return lift2(destructiveCons, m, m_);
+    }, point(ofObject, []));
+
+    function destructiveCons(head, tail) {
+        tail.unshift(head)
+        return tail
+    }
+}
+exports.sequence = sequence;
