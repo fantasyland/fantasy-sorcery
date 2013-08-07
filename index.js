@@ -8,10 +8,10 @@ function append(a, b) {
 }
 exports.append = append;
 
-function zero(m) {
-    return m.zero ? m.zero() : m.constructor.zero();
+function empty(m) {
+    return m.empty ? m.empty() : m.constructor.empty();
 }
-exports.zero = zero;
+exports.empty = empty;
 
 function map(m, f) {
     if(m.map) return m.map(f);
