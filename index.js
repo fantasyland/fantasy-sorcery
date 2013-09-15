@@ -37,7 +37,7 @@ function join(m) {
 exports.join = join;
 
 function ap(a, f) {
-    if(a.ap) return a.ap(f);
+    if(f.ap) return f.ap(a);
     return flatMap(f, function(f) {
         return map(a, f);
     });
