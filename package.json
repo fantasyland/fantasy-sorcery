@@ -1,6 +1,6 @@
 {
   "name": "fantasy-sorcery",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Common functions to work on Fantasy Land compatible structures.",
   "main": "index.js",
   "scripts": {
