@@ -76,3 +76,18 @@ function lift4(f, a, b, c, d) {
     }))));
 }
 exports.lift4 = lift4;
+
+function lift5(f, a, b, c, d, e) {
+    return ap(e, ap(d, ap(c, ap(b, map(a, function(a) {
+        return function(b) {
+            return function(c) {
+                return function(d) {
+                    return function(e) {
+                        return f(a, b, c, d, e);
+                    };
+                };
+            };
+        };
+    })))));
+}
+exports.lift5 = lift5;
