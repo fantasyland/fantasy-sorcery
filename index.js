@@ -3,6 +3,13 @@ function identity(a) {
 }
 exports.identity = identity;
 
+function constant(a) {
+  return function(_) {
+    return a;
+  };
+}
+exports.constant = constant;
+
 function append(a, b) {
     return a.concat(b);
 }
@@ -43,6 +50,20 @@ function ap(a, f) {
     });
 }
 exports.ap = ap;
+
+function flowRight(of) {
+  return function (left, right) {
+    return of.of(constant(identity)).ap(left).ap(right);
+  };
+}
+exports.flowRight = flowRight;
+
+function flowLeft(of) {
+  return function (left, right) {
+    return of.of(constant).ap(left).ap(right);
+  };
+}
+exports.flowLeft = flowLeft;
 
 function lift2(f, a, b) {
     return ap(b, map(a, function(a) {
