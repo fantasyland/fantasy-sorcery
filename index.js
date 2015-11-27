@@ -51,17 +51,21 @@ function ap(a, f) {
 }
 exports.ap = ap;
 
-function flowRight(of) {
-  return function (left, right) {
-    return of.of(constant(identity)).ap(left).ap(right);
-  };
+function flowRight(left, right) {
+  var of = left.of || left.constructor.of;
+  if (!of) {
+    throw new TypeError('Unable to find Applicative.of on left');
+  }
+  return of(constant(identity)).ap(left).ap(right);
 }
 exports.flowRight = flowRight;
 
-function flowLeft(of) {
-  return function (left, right) {
-    return of.of(constant).ap(left).ap(right);
-  };
+function flowLeft(left, right) {
+  var of = left.of || left.constructor.of;
+  if (!of) {
+    throw new TypeError('Unable to find Applicative.of on left');
+  }
+  return of(constant).ap(left).ap(right);
 }
 exports.flowLeft = flowLeft;
 
