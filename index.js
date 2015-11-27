@@ -3,6 +3,13 @@ function identity(a) {
 }
 exports.identity = identity;
 
+function constant(a) {
+  return function(_) {
+    return a;
+  };
+}
+exports.constant = constant;
+
 function append(a, b) {
     return a.concat(b);
 }
@@ -43,6 +50,24 @@ function ap(a, f) {
     });
 }
 exports.ap = ap;
+
+function flowRight(left, right) {
+  var of = left.of || left.constructor.of;
+  if (!of) {
+    throw new TypeError('Unable to find Applicative.of on left');
+  }
+  return of(constant(identity)).ap(left).ap(right);
+}
+exports.flowRight = flowRight;
+
+function flowLeft(left, right) {
+  var of = left.of || left.constructor.of;
+  if (!of) {
+    throw new TypeError('Unable to find Applicative.of on left');
+  }
+  return of(constant).ap(left).ap(right);
+}
+exports.flowLeft = flowLeft;
 
 function lift2(f, a, b) {
     return ap(b, map(a, function(a) {
