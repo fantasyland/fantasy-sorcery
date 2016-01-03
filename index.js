@@ -15,9 +15,7 @@ exports.empty = empty;
 
 function map(m, f) {
     if(m.map) return m.map(f);
-    return flatMap(m, function(a) {
-        return point(m, f(a));
-    });
+    else return flatMap(m, (a) => point(m, f(a)));
 }
 exports.map = map;
 
@@ -38,56 +36,26 @@ exports.join = join;
 
 function ap(a, f) {
     if(f.ap) return f.ap(a);
-    return flatMap(f, function(f) {
-        return map(a, f);
-    });
+    else return flatMap(f, (f) => map(a, f));
 }
 exports.ap = ap;
 
 function lift2(f, a, b) {
-    return ap(b, map(a, function(a) {
-        return function(b) {
-            return f(a, b);
-        };
-    }));
+    return ap(b, map(a, (a) => (b) => f(a, b)));
 }
 exports.lift2 = lift2;
 
 function lift3(f, a, b, c) {
-    return ap(c, ap(b, map(a, function(a) {
-        return function(b) {
-            return function(c) {
-                return f(a, b, c);
-            };
-        };
-    })));
+    return ap(c, ap(b, map(a, (a) => (b) => (c) => f(a, b, c))));
 }
 exports.lift3 = lift3;
 
 function lift4(f, a, b, c, d) {
-    return ap(d, ap(c, ap(b, map(a, function(a) {
-        return function(b) {
-            return function(c) {
-                return function(d) {
-                    return f(a, b, c, d);
-                };
-            };
-        };
-    }))));
+    return ap(d, ap(c, ap(b, map(a, (a) => (b) => (c) => (d) => f(a, b, c, d)))));
 }
 exports.lift4 = lift4;
 
 function lift5(f, a, b, c, d, e) {
-    return ap(e, ap(d, ap(c, ap(b, map(a, function(a) {
-        return function(b) {
-            return function(c) {
-                return function(d) {
-                    return function(e) {
-                        return f(a, b, c, d, e);
-                    };
-                };
-            };
-        };
-    })))));
+    return ap(e, ap(d, ap(c, ap(b, map(a, (a) => (b) => (c) => (d) => (e) => f(a, b, c, d, e))))));
 }
 exports.lift5 = lift5;
